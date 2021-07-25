@@ -1,9 +1,18 @@
-import 'dart:math';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:sho_tests/domain/Course.dart';
-import 'package:sho_tests/domain/option.dart';
 import 'package:sho_tests/domain/quiz.dart';
 
-class AnswerModel extends ChangeNotifier {}
+/// 解答モデル
+class AnswerModel extends ChangeNotifier {
+  bool isEnd;
+
+  /// 全クイズ完了したかどうか確認
+  confirmEnd(List<Quiz> quizList) {
+    int totalQuizNum = quizList.length;
+    int answeredQuizNum = quizList.where((quiz) => quiz.isAnswered).length;
+    if (totalQuizNum == answeredQuizNum) {
+      isEnd = true;
+    } else {
+      isEnd = false;
+    }
+  }
+}

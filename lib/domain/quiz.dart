@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+/// クイズ
 class Quiz {
+  // Firestoreから取得した値をセット
   String documentId;
   String id;
   String question;
@@ -14,6 +16,9 @@ class Quiz {
   bool isExamined;
   DateTime createdAt;
   DateTime updatedAt;
+  // ユーザ操作に合わせてセット
+  bool isAnswered;
+  bool isCorrect;
 
   Quiz(QueryDocumentSnapshot doc) {
     this.documentId = doc.id;
@@ -31,5 +36,8 @@ class Quiz {
     this.createdAt = createdAt.toDate();
     final Timestamp updatedAt = doc['updatedAt'];
     this.updatedAt = updatedAt.toDate();
+    // 初期状態はfalse
+    this.isAnswered = false;
+    this.isCorrect = false;
   }
 }

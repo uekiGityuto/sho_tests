@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sho_tests/presentation/main/main.dart';
 import 'package:sho_tests/presentation/quiz/quiz_page.dart';
 
 import 'course_list_model.dart';
 
+/// コース選択ページ
 class CourseListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,8 @@ class CourseListPage extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => QuizPage(course)),
+                                  builder: (context) =>
+                                      QuizPage(course: course)),
                             );
                           }),
                     ))

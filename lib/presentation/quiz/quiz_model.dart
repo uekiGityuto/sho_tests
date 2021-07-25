@@ -11,23 +11,38 @@ class QuizModel extends ChangeNotifier {
   List<Quiz> quizList = [];
   Quiz quiz;
   List<Option> optionList = [];
+  String totalQuizNum;
+  String answeringNum;
 
-  /// クイズ取得
-  getQuiz(Course course) async {
-    final querySnapshot = await FirebaseFirestore.instance
-        .collection('courses')
-        .doc(course.documentId)
-        .collection('quizzes')
-        .get();
+  /// Firestoreからクイズ取得
+  getQuiz({Course course, List<Quiz> quizList}) async {
+    if (quizList != null) {
+      // 引数のクイズリストをモデルのクイズリストにセット
+      this.quizList = quizList;
+    } else {
+      // Firestoreからクイズリスト取得
+      final querySnapshot = await FirebaseFirestore.instance
+          .collection('courses')
+          .doc(course.documentId)
+          .collection('quizzes')
+          .get();
+      this.quizList = querySnapshot.docs.map((doc) => new Quiz(doc)).toList();
+    }
 
-    List<Quiz> quizList =
-        querySnapshot.docs.map((doc) => new Quiz(doc)).toList();
-    quizList =
-        quizList.where((quiz) => quiz.isEnabled && quiz.isExamined).toList();
-    this.quizList = _shuffle(quizList);
+    // トータルのクイズ数と今何問目かを取得
+    this.totalQuizNum = this.quizList.length.toString();
+    this.answeringNum =
+        (this.quizList.where((quiz) => quiz.isAnswered).length + 1).toString();
 
-    // クイズの表示
-    this.quiz = quizList[0];
+    // クイズリストから有効なクイズをランダムに1問取得
+    List<Quiz> targetQuizList = this
+        .quizList
+        .where((quiz) => quiz.isEnabled && quiz.isExamined && !quiz.isAnswered)
+        .toList();
+    _shuffle(targetQuizList);
+    this.quiz = targetQuizList[0];
+
+    // クイズの選択肢をシャッフル
     Option option1 = new Option(this.quiz.option1, false);
     Option option2 = new Option(this.quiz.option2, false);
     Option option3 = new Option(this.quiz.option3, false);
@@ -35,8 +50,18 @@ class QuizModel extends ChangeNotifier {
     this.optionList = [option1, option2, option3, option4];
     _shuffle(this.optionList);
 
-    // クイズリストから表示済みクイズを除去
-    // this.quizList.removeAt(0);
+    notifyListeners();
+  }
+
+  /// クイズリストの更新
+  updateQuizList() async {
+    //出題済みクイズの情報を更新する
+    print(this.quizList.length);
+    this.quizList = this
+        .quizList
+        .where((quiz) => quiz.documentId != this.quiz.documentId)
+        .toList();
+    this.quizList.add(this.quiz);
 
     notifyListeners();
   }

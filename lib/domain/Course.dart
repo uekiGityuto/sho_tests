@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+/// コース
 class Course {
   String documentId;
   String courseName;

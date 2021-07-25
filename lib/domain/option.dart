@@ -1,3 +1,4 @@
+/// クイズ選択肢
 class Option {
   String text;
   bool isCorrect;
