@@ -29,7 +29,7 @@ class MainModel extends ChangeNotifier {
     // 追加対象データを準備
     Map<String, dynamic> data = <String, dynamic>{
       'userName': userCredential.user.displayName,
-      'role': '0',
+      'isManager': false,
       'createdAt': Timestamp.now(),
       'updatedAt': Timestamp.now(),
     };

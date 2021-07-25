@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sho_tests/presentation/course_list/course_list_page.dart';
@@ -23,7 +22,7 @@ class HomePage extends StatelessWidget {
                   SizedBox(
                     width: 330,
                     child: ElevatedButton(
-                        child: Text('コースを選択'),
+                        child: Text('クイズに挑戦'),
                         onPressed: () {
                           Navigator.push(
                             context,

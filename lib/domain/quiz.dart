@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Quiz {
   // Firestoreから取得した値をセット
   String documentId;
-  String id;
+  String courseId;
   String question;
   String option1;
   String option2;
@@ -20,21 +20,21 @@ class Quiz {
   bool isAnswered;
   bool isCorrect;
 
-  Quiz(QueryDocumentSnapshot doc) {
-    this.documentId = doc.id;
-    this.id = doc['id'];
-    this.question = doc['question'];
-    this.option1 = doc['option1'];
-    this.option2 = doc['option2'];
-    this.option3 = doc['option3'];
-    this.answer = doc['answer'];
-    this.commentary = doc['commentary'];
-    this.userId = doc['userId'];
-    this.isEnabled = doc['isEnabled'];
-    this.isExamined = doc['isExamined'];
-    final Timestamp createdAt = doc['createdAt'];
+  Quiz(Map<String, dynamic> data, String docId) {
+    this.documentId = docId;
+    this.courseId = data['courseId'];
+    this.question = data['question'];
+    this.option1 = data['option1'];
+    this.option2 = data['option2'];
+    this.option3 = data['option3'];
+    this.answer = data['answer'];
+    this.commentary = data['commentary'];
+    this.userId = data['userId'];
+    this.isEnabled = data['isEnabled'];
+    this.isExamined = data['isExamined'];
+    final Timestamp createdAt = data['createdAt'];
     this.createdAt = createdAt.toDate();
-    final Timestamp updatedAt = doc['updatedAt'];
+    final Timestamp updatedAt = data['updatedAt'];
     this.updatedAt = updatedAt.toDate();
     // 初期状態はfalse
     this.isAnswered = false;

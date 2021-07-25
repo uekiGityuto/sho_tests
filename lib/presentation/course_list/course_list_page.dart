@@ -21,6 +21,7 @@ class CourseListPage extends StatelessWidget {
             title: Text('コース一覧'),
           ),
           body: Consumer<CourseListModel>(builder: (context, model, child) {
+            // Firestoreから取得したデータを元にコース選択ボタン作成
             final courseList = model.courseList;
             final courseButtons = courseList
                 .map((course) => SizedBox(
@@ -38,6 +39,26 @@ class CourseListPage extends StatelessWidget {
                           }),
                     ))
                 .toList();
+
+            if (!this.isPost) {
+              // オリジナル問題集ボタンをコース一覧に追加
+              final favoriteQuizButton = SizedBox(
+                width: 330,
+                child: ElevatedButton(
+                    child: Text('オリジナル問題集'),
+                    onPressed: () async {
+                      // オリジナル問題集を作成
+                      await model.getOriginalQuizList();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                QuizPage(quizList: model.quizList)),
+                      );
+                    }),
+              );
+              courseButtons.add(favoriteQuizButton);
+            }
 
             return Center(
               child: Column(

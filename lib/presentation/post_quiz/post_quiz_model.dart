@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sho_tests/domain/Course.dart';
 
@@ -42,7 +41,7 @@ class PostQuizModel extends ChangeNotifier {
         .collection('quizzes');
 
     await quizzes.add({
-      'id': '', // TODO: 考える
+      'courseId': course.documentId,
       'question': this.question,
       'option1': this.option1,
       'option2': this.option2,

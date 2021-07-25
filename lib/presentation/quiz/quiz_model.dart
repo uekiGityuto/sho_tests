@@ -26,7 +26,9 @@ class QuizModel extends ChangeNotifier {
           .doc(course.documentId)
           .collection('quizzes')
           .get();
-      this.quizList = querySnapshot.docs.map((doc) => new Quiz(doc)).toList();
+      this.quizList = querySnapshot.docs
+          .map((doc) => new Quiz(doc.data(), doc.id))
+          .toList();
     }
 
     // トータルのクイズ数と今何問目かを取得

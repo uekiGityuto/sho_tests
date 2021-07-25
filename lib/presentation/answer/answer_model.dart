@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sho_tests/domain/quiz.dart';
 
@@ -14,5 +16,22 @@ class AnswerModel extends ChangeNotifier {
     } else {
       isEnd = false;
     }
+  }
+
+  /// オリジナル問題集に追加
+  Future addOriginalQuizzes(Quiz quiz) async {
+    String uid = FirebaseAuth.instance.currentUser.uid;
+
+    CollectionReference favoriteQuizzes = FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('favoriteQuizzes');
+
+    await favoriteQuizzes.add({
+      'courseId': quiz.courseId,
+      'quizId': quiz.documentId,
+      'createdAt': Timestamp.now(),
+      'updatedAt': Timestamp.now(),
+    });
   }
 }

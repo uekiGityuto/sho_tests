@@ -66,6 +66,14 @@ class AnswerPage extends StatelessWidget {
                             );
                           }),
                 ),
+                SizedBox(
+                  width: 330,
+                  child: ElevatedButton(
+                      child: Text('オリジナル問題集に追加'),
+                      onPressed: () async {
+                        await model.addOriginalQuizzes(_quiz);
+                      }),
+                ),
               ],
             );
           }),
