@@ -34,7 +34,7 @@ class ResultPage extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => CourseListPage()),
+                                builder: (context) => CourseListPage(false)),
                           );
                         }),
                   ),

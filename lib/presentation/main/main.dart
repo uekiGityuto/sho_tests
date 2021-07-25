@@ -48,7 +48,19 @@ class HomePage extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => CourseListPage()),
+                                builder: (context) => CourseListPage(false)),
+                          );
+                        }),
+                  ),
+                  SizedBox(
+                    width: 330,
+                    child: ElevatedButton(
+                        child: Text('オリジナルクイズを投稿'),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CourseListPage(true)),
                           );
                         }),
                   ),

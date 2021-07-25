@@ -1,12 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sho_tests/presentation/post_quiz/post_quiz_page.dart';
 import 'package:sho_tests/presentation/quiz/quiz_page.dart';
 
 import 'course_list_model.dart';
 
 /// コース選択ページ
 class CourseListPage extends StatelessWidget {
+  final bool isPost;
+
+  CourseListPage(this.isPost);
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<CourseListModel>(
@@ -26,8 +31,9 @@ class CourseListPage extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      QuizPage(course: course)),
+                                  builder: (context) => isPost
+                                      ? PostQuizPage(course: course)
+                                      : QuizPage(course: course)),
                             );
                           }),
                     ))
@@ -36,7 +42,9 @@ class CourseListPage extends StatelessWidget {
             return Center(
               child: Column(
                 children: [
-                  Text('学習したいコースを選択して下さい。'),
+                  Text(this.isPost
+                      ? 'クイズを追加したいコースを選択して下さい'
+                      : '学習したいコースを選択して下さい。'),
                   Column(
                     children: courseButtons,
                   ),
