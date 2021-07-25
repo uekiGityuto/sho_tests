@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sho_tests/domain/Course.dart';
 
@@ -14,12 +16,22 @@ class PostQuizModel extends ChangeNotifier {
 
   /// Firestoreにクイズ追加
   postQuiz(Course course) async {
-    if (this.question.isEmpty ||
-        this.option1.isEmpty ||
-        this.option2.isEmpty ||
-        this.option3.isEmpty ||
-        this.answer.isEmpty ||
-        this.commentary.isEmpty) {
+    if (this.question.isEmpty) {
+      throw ('問題を入力して下さい。');
+    }
+    if (this.option1.isEmpty) {
+      throw ('選択肢1を入力して下さい。');
+    }
+    if (this.option2.isEmpty) {
+      throw ('選択肢2を入力して下さい。');
+    }
+    if (this.option3.isEmpty) {
+      throw ('選択肢3を入力して下さい。');
+    }
+    if (this.answer.isEmpty) {
+      throw ('選択肢4 & 解答を入力して下さい。');
+    }
+    if (this.commentary.isEmpty) {
       throw ('入力が漏れています。全項目の入力が必要です。');
     }
 
@@ -34,9 +46,10 @@ class PostQuizModel extends ChangeNotifier {
       'question': this.question,
       'option1': this.option1,
       'option2': this.option2,
+      'option3': this.option3,
       'answer': this.answer,
       'commentary': this.commentary,
-      'userId': '', // TODO: FireAuthから取得
+      'userId': FirebaseAuth.instance.currentUser.uid,
       'isEnabled': true,
       'isExamined': true,
       'createdAt': Timestamp.now(),

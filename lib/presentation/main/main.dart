@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sho_tests/presentation/course_list/course_list_page.dart';
+import 'package:sho_tests/presentation/home/home_page.dart';
 
 import 'main_model.dart';
 
@@ -12,7 +12,6 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,12 +19,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      home: SignPage(),
     );
   }
 }
 
-class HomePage extends StatelessWidget {
+class SignPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<MainModel>(
@@ -43,24 +42,12 @@ class HomePage extends StatelessWidget {
                   SizedBox(
                     width: 330,
                     child: ElevatedButton(
-                        child: Text('コースを選択'),
-                        onPressed: () {
+                        child: Text('Googleでサインイン'),
+                        onPressed: () async {
+                          await model.signInWithGoogle();
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => CourseListPage(false)),
-                          );
-                        }),
-                  ),
-                  SizedBox(
-                    width: 330,
-                    child: ElevatedButton(
-                        child: Text('オリジナルクイズを投稿'),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CourseListPage(true)),
+                            MaterialPageRoute(builder: (context) => HomePage()),
                           );
                         }),
                   ),

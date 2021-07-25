@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sho_tests/common/utility.dart';
 import 'package:sho_tests/domain/Course.dart';
-import 'package:sho_tests/presentation/main/main.dart';
+import 'package:sho_tests/presentation/home/home_page.dart';
 
 import 'post_quiz_model.dart';
 
@@ -45,13 +45,6 @@ class PostQuizPage extends StatelessWidget {
                         child: TextField(
                           decoration: InputDecoration(
                               border: OutlineInputBorder(), hintText: '選択肢1'),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextField(
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(), hintText: '選択肢2'),
                           onChanged: (text) {
                             model.option1 = text;
                           },
@@ -61,9 +54,19 @@ class PostQuizPage extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: TextField(
                           decoration: InputDecoration(
-                              border: OutlineInputBorder(), hintText: '選択肢3'),
+                              border: OutlineInputBorder(), hintText: '選択肢2'),
                           onChanged: (text) {
                             model.option2 = text;
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(), hintText: '選択肢3'),
+                          onChanged: (text) {
+                            model.option3 = text;
                           },
                         ),
                       ),

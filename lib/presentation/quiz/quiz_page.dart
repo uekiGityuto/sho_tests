@@ -57,7 +57,9 @@ class QuizPage extends StatelessWidget {
                 children: [
                   Row(children: [
                     Text('問題'),
-                    Text(model.quiz == null ? '' : model.quiz.question),
+                    Expanded(
+                        child: Text(
+                            model.quiz == null ? '' : model.quiz.question)),
                   ]),
                   Row(children: [
                     Text('選択肢'),
