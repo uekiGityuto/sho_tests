@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sho_tests/common/presentation/side_menu/side_menu_page.dart';
 import 'package:sho_tests/domain/Course.dart';
 import 'package:sho_tests/domain/quiz.dart';
 import 'package:sho_tests/presentation/answer/answer_page.dart';
@@ -24,8 +25,19 @@ class QuizPage extends StatelessWidget {
         create: (_) => QuizModel()..getQuiz(course: course, quizList: quizList),
         child: Scaffold(
           appBar: AppBar(
+            leading: Builder(
+              builder: (BuildContext context) {
+                return IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                );
+              },
+            ),
             title: Text('クイズモード'),
           ),
+          endDrawer: SideMenu(),
           body: Consumer<QuizModel>(
             builder: (context, model, child) {
               final optionList = model.optionList

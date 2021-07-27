@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sho_tests/common/presentation/side_menu/side_menu_page.dart';
 import 'package:sho_tests/common/utility.dart';
 import 'package:sho_tests/domain/Course.dart';
 import 'package:sho_tests/presentation/home/home_page.dart';
@@ -19,8 +20,19 @@ class PostQuizPage extends StatelessWidget {
         create: (_) => PostQuizModel(),
         child: Scaffold(
           appBar: AppBar(
+            leading: Builder(
+              builder: (BuildContext context) {
+                return IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                );
+              },
+            ),
             title: Text('オリジナルクイズ投稿'),
           ),
+          endDrawer: SideMenu(),
           body: Consumer<PostQuizModel>(
             builder: (context, model, child) {
               return Center(

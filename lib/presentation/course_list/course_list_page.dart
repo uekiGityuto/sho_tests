@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sho_tests/common/presentation/side_menu/side_menu_page.dart';
 import 'package:sho_tests/presentation/post_quiz/post_quiz_page.dart';
 import 'package:sho_tests/presentation/quiz/quiz_page.dart';
 
@@ -18,8 +19,19 @@ class CourseListPage extends StatelessWidget {
         create: (_) => CourseListModel()..fetchCourses(),
         child: Scaffold(
           appBar: AppBar(
+            leading: Builder(
+              builder: (BuildContext context) {
+                return IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                );
+              },
+            ),
             title: Text('コース一覧'),
           ),
+          endDrawer: SideMenu(),
           body: Consumer<CourseListModel>(builder: (context, model, child) {
             // Firestoreから取得したデータを元にコース選択ボタン作成
             final courseList = model.courseList;

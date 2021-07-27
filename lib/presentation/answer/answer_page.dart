@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sho_tests/common/presentation/side_menu/side_menu_page.dart';
 import 'package:sho_tests/domain/quiz.dart';
 import 'package:sho_tests/presentation/quiz/quiz_page.dart';
 import 'package:sho_tests/presentation/result/result_page.dart';
@@ -21,8 +22,19 @@ class AnswerPage extends StatelessWidget {
         create: (_) => AnswerModel()..confirmEnd(_quizList),
         child: Scaffold(
           appBar: AppBar(
+            leading: Builder(
+              builder: (BuildContext context) {
+                return IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                );
+              },
+            ),
             title: Text('解答・解説'),
           ),
+          endDrawer: SideMenu(),
           body: Consumer<AnswerModel>(builder: (context, model, child) {
             return Column(
               children: [
