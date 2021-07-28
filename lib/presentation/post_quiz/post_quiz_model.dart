@@ -34,6 +34,8 @@ class PostQuizModel extends ChangeNotifier {
       throw ('入力が漏れています。全項目の入力が必要です。');
     }
 
+    print('改行確認:' + this.question);
+
     // Firestoreに追加
     CollectionReference quizzes = FirebaseFirestore.instance
         .collection('courses')
