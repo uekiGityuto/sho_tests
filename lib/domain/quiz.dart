@@ -19,6 +19,7 @@ class Quiz {
   // ユーザ操作に合わせてセット
   bool isAnswered;
   bool isCorrect;
+  bool isOriginal;
 
   Quiz(Map<String, dynamic> data, String docId) {
     this.documentId = docId;
@@ -39,5 +40,28 @@ class Quiz {
     // 初期状態はfalse
     this.isAnswered = false;
     this.isCorrect = false;
+    this.isOriginal = false;
+  }
+
+  Quiz.original(Map<String, dynamic> data, String docId) {
+    this.documentId = docId;
+    this.courseId = data['courseId'];
+    this.question = data['question'];
+    this.option1 = data['option1'];
+    this.option2 = data['option2'];
+    this.option3 = data['option3'];
+    this.answer = data['answer'];
+    this.commentary = data['commentary'];
+    this.userId = data['userId'];
+    this.isEnabled = data['isEnabled'];
+    this.isExamined = data['isExamined'];
+    final Timestamp createdAt = data['createdAt'];
+    this.createdAt = createdAt.toDate();
+    final Timestamp updatedAt = data['updatedAt'];
+    this.updatedAt = updatedAt.toDate();
+    // 初期状態はfalse
+    this.isAnswered = false;
+    this.isCorrect = false;
+    this.isOriginal = true;
   }
 }

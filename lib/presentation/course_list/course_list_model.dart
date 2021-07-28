@@ -38,8 +38,6 @@ class CourseListModel extends ChangeNotifier {
   Future<Quiz> _getQuiz(QueryDocumentSnapshot<Map<String, dynamic>> doc) async {
     String courseId = doc['courseId'];
     String quizId = doc['quizId'];
-    print('courseId:' + courseId);
-    print('quizId:' + quizId);
 
     final docSnapshot = await FirebaseFirestore.instance
         .collection('courses')
@@ -48,6 +46,6 @@ class CourseListModel extends ChangeNotifier {
         .doc(quizId)
         .get();
 
-    return new Quiz(docSnapshot.data(), doc.id);
+    return new Quiz.original(docSnapshot.data(), quizId);
   }
 }

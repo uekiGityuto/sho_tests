@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sho_tests/common/presentation/side_menu/side_menu_page.dart';
+import 'package:sho_tests/common/utility.dart';
 import 'package:sho_tests/domain/quiz.dart';
 import 'package:sho_tests/presentation/quiz/quiz_page.dart';
 import 'package:sho_tests/presentation/result/result_page.dart';
@@ -13,8 +14,9 @@ class AnswerPage extends StatelessWidget {
   final Quiz _quiz;
   final bool _isCorrect;
   final List<Quiz> _quizList;
+  final bool _isOriginal;
 
-  AnswerPage(this._quiz, this._isCorrect, this._quizList);
+  AnswerPage(this._quiz, this._isCorrect, this._quizList, this._isOriginal);
 
   @override
   Widget build(BuildContext context) {
@@ -73,19 +75,37 @@ class AnswerPage extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      QuizPage(quizList: _quizList)),
+                                  builder: (context) => QuizPage(
+                                      quizList: _quizList,
+                                      isOriginal: _isOriginal)),
                             );
                           }),
                 ),
-                SizedBox(
-                  width: 330,
-                  child: ElevatedButton(
-                      child: Text('オリジナル問題集に追加'),
-                      onPressed: () async {
-                        await model.addOriginalQuizzes(_quiz);
-                      }),
-                ),
+                this._isOriginal
+                    ? SizedBox(
+                        width: 330,
+                        child: ElevatedButton(
+                            child: Text('このクイズをオリジナル問題集から削除'),
+                            onPressed: () async {
+                              final isDeleted = await model.deleteQuiz(_quiz);
+                              Utility.getShowDialog(
+                                  context, isDeleted ? '削除しました。' : "既に削除済みです。");
+                            }),
+                      )
+                    : SizedBox(
+                        width: 330,
+                        child: ElevatedButton(
+                            child: Text('オリジナル問題集に追加'),
+                            onPressed: () async {
+                              final isCompleted =
+                                  await model.addOriginalQuizzes(_quiz);
+                              Utility.getShowDialog(
+                                  context,
+                                  isCompleted
+                                      ? 'オリジナル問題集に追加しました。'
+                                      : '既に登録済みです。');
+                            }),
+                      ),
               ],
             );
           }),

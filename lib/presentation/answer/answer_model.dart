@@ -19,7 +19,7 @@ class AnswerModel extends ChangeNotifier {
   }
 
   /// オリジナル問題集に追加
-  Future addOriginalQuizzes(Quiz quiz) async {
+  Future<bool> addOriginalQuizzes(Quiz quiz) async {
     String uid = FirebaseAuth.instance.currentUser.uid;
 
     CollectionReference favoriteQuizzes = FirebaseFirestore.instance
@@ -27,11 +27,51 @@ class AnswerModel extends ChangeNotifier {
         .doc(uid)
         .collection('favoriteQuizzes');
 
+    // 既に登録済みかどうか確認
+    final querySnapshot = await favoriteQuizzes
+        .where('courseId', isEqualTo: quiz.courseId)
+        .where('quizId', isEqualTo: quiz.documentId)
+        .limit(1)
+        .get();
+
+    // 登録済みの場合は追加しない
+    if (querySnapshot.docs.length >= 1) {
+      return false;
+    }
+
+    // Firestoreに追加
     await favoriteQuizzes.add({
       'courseId': quiz.courseId,
       'quizId': quiz.documentId,
       'createdAt': Timestamp.now(),
       'updatedAt': Timestamp.now(),
     });
+    return true;
+  }
+
+  /// 削除
+  Future<bool> deleteQuiz(Quiz quiz) async {
+    String uid = FirebaseAuth.instance.currentUser.uid;
+
+    CollectionReference favoriteQuizzes = FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('favoriteQuizzes');
+
+    // 削除対象ドキュメント取得
+    final querySnapshot = await favoriteQuizzes
+        .where('courseId', isEqualTo: quiz.courseId)
+        .where('quizId', isEqualTo: quiz.documentId)
+        .get();
+
+    if (querySnapshot.docs.length == 0) {
+      return false;
+    }
+
+    // ドキュメント削除
+    querySnapshot.docs.forEach((doc) async {
+      await doc.reference.delete();
+    });
+    return true;
   }
 }

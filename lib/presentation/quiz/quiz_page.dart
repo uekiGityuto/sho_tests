@@ -12,12 +12,13 @@ import 'quiz_model.dart';
 class QuizPage extends StatelessWidget {
   final Course course;
   final List<Quiz> quizList;
+  final bool isOriginal;
 
-  QuizPage({this.course, this.quizList}) {
-    // if (this.course == null && this.quizList == null) {
-    //   throw ArgumentError('courseとquizListの両方がnullだとエラーです。');
-    // }
-  }
+  QuizPage({this.course, this.quizList, this.isOriginal});
+  // {
+  // if (this.course == null && this.quizList == null) {
+  //   throw ArgumentError('courseとquizListの両方がnullだとエラーです。');
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -57,8 +58,11 @@ class QuizPage extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => AnswerPage(model.quiz,
-                                      option.isCorrect, model.quizList)),
+                                  builder: (context) => AnswerPage(
+                                      model.quiz,
+                                      option.isCorrect,
+                                      model.quizList,
+                                      this.isOriginal)),
                             );
                           }),
                     ),

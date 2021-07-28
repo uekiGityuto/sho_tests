@@ -58,7 +58,6 @@ class QuizModel extends ChangeNotifier {
   /// クイズリストの更新
   updateQuizList() async {
     //出題済みクイズの情報を更新する
-    print(this.quizList.length);
     this.quizList = this
         .quizList
         .where((quiz) => quiz.documentId != this.quiz.documentId)

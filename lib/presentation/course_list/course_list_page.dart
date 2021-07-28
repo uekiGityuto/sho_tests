@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sho_tests/common/presentation/side_menu/side_menu_page.dart';
+import 'package:sho_tests/common/utility.dart';
 import 'package:sho_tests/presentation/post_quiz/post_quiz_page.dart';
 import 'package:sho_tests/presentation/quiz/quiz_page.dart';
 
@@ -46,7 +47,8 @@ class CourseListPage extends StatelessWidget {
                               MaterialPageRoute(
                                   builder: (context) => isPost
                                       ? PostQuizPage(course: course)
-                                      : QuizPage(course: course)),
+                                      : QuizPage(
+                                          course: course, isOriginal: false)),
                             );
                           }),
                     ))
@@ -61,12 +63,18 @@ class CourseListPage extends StatelessWidget {
                     onPressed: () async {
                       // オリジナル問題集を作成
                       await model.getOriginalQuizList();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                QuizPage(quizList: model.quizList)),
-                      );
+                      model.quizList.length != 0
+                          ? Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => QuizPage(
+                                      quizList: model.quizList,
+                                      isOriginal: true)),
+                            )
+                          : Utility.getShowDialog(
+                              context,
+                              'オリジナル問題集が存在しません。\n'
+                              'オリジナル問題集を作成するためには、お気に入りのクイズを保存して下さい。');
                     }),
               );
               courseButtons.add(favoriteQuizButton);
