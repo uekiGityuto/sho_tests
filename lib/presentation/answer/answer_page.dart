@@ -81,31 +81,29 @@ class AnswerPage extends StatelessWidget {
                             );
                           }),
                 ),
-                this._isOriginal
-                    ? SizedBox(
-                        width: 330,
-                        child: ElevatedButton(
-                            child: Text('このクイズをオリジナル問題集から削除'),
-                            onPressed: () async {
-                              final isDeleted = await model.deleteQuiz(_quiz);
-                              Utility.getShowDialog(
-                                  context, isDeleted ? '削除しました。' : "既に削除済みです。");
-                            }),
-                      )
-                    : SizedBox(
-                        width: 330,
-                        child: ElevatedButton(
-                            child: Text('オリジナル問題集に追加'),
-                            onPressed: () async {
-                              final isCompleted =
-                                  await model.addOriginalQuizzes(_quiz);
-                              Utility.getShowDialog(
-                                  context,
-                                  isCompleted
-                                      ? 'オリジナル問題集に追加しました。'
-                                      : '既に登録済みです。');
-                            }),
-                      ),
+                if (this._isOriginal && !model.isDeleted)
+                  SizedBox(
+                    width: 330,
+                    child: ElevatedButton(
+                        child: Text('このクイズをオリジナル問題集から削除'),
+                        onPressed: () async {
+                          final isDeleted = await model.deleteQuiz(_quiz);
+                          Utility.getShowDialog(
+                              context, isDeleted ? '削除しました。' : '既に削除済みです');
+                        }),
+                  ),
+                if (!this._isOriginal)
+                  SizedBox(
+                    width: 330,
+                    child: ElevatedButton(
+                        child: Text('オリジナル問題集に追加'),
+                        onPressed: () async {
+                          final isCompleted =
+                              await model.addOriginalQuizzes(_quiz);
+                          Utility.getShowDialog(context,
+                              isCompleted ? 'オリジナル問題集に追加しました。' : '既に登録済みです。');
+                        }),
+                  ),
               ],
             );
           }),

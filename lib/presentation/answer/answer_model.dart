@@ -6,6 +6,7 @@ import 'package:sho_tests/domain/quiz.dart';
 /// 解答モデル
 class AnswerModel extends ChangeNotifier {
   bool isEnd;
+  bool isDeleted = false;
 
   /// 全クイズ完了したかどうか確認
   confirmEnd(List<Quiz> quizList) {
@@ -51,6 +52,10 @@ class AnswerModel extends ChangeNotifier {
 
   /// 削除
   Future<bool> deleteQuiz(Quiz quiz) async {
+    if (this.isDeleted) {
+      return false;
+    }
+
     String uid = FirebaseAuth.instance.currentUser.uid;
 
     CollectionReference favoriteQuizzes = FirebaseFirestore.instance
@@ -64,14 +69,12 @@ class AnswerModel extends ChangeNotifier {
         .where('quizId', isEqualTo: quiz.documentId)
         .get();
 
-    if (querySnapshot.docs.length == 0) {
-      return false;
-    }
-
     // ドキュメント削除
     querySnapshot.docs.forEach((doc) async {
       await doc.reference.delete();
     });
+    this.isDeleted = true;
+    notifyListeners();
     return true;
   }
 }
