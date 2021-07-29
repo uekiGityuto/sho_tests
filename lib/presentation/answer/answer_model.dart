@@ -19,7 +19,7 @@ class AnswerModel extends ChangeNotifier {
     }
   }
 
-  /// オリジナル問題集に追加
+  /// お気に入り問題集に追加
   Future<bool> addOriginalQuizzes(Quiz quiz) async {
     String uid = FirebaseAuth.instance.currentUser.uid;
 
@@ -44,8 +44,8 @@ class AnswerModel extends ChangeNotifier {
     await favoriteQuizzes.add({
       'courseId': quiz.courseId,
       'quizId': quiz.documentId,
-      'createdAt': Timestamp.now(),
-      'updatedAt': Timestamp.now(),
+      'createdAt': FieldValue.serverTimestamp(),
+      'updatedAt': FieldValue.serverTimestamp(),
     });
     return true;
   }

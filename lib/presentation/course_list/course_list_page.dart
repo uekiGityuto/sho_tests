@@ -55,13 +55,13 @@ class CourseListPage extends StatelessWidget {
                 .toList();
 
             if (!this.isPost) {
-              // オリジナル問題集ボタンをコース一覧に追加
+              // お気に入り問題集ボタンをコース一覧に追加
               final favoriteQuizButton = SizedBox(
                 width: 330,
                 child: ElevatedButton(
-                    child: Text('オリジナル問題集'),
+                    child: Text('お気に入り問題集'),
                     onPressed: () async {
-                      // オリジナル問題集を作成
+                      // お気に入り問題集を作成
                       await model.getOriginalQuizList();
                       model.quizList.length != 0
                           ? Navigator.push(
@@ -73,8 +73,8 @@ class CourseListPage extends StatelessWidget {
                             )
                           : Utility.getShowDialog(
                               context,
-                              'オリジナル問題集が存在しません。\n'
-                              'オリジナル問題集を作成するためには、お気に入りのクイズを保存して下さい。');
+                              'お気に入り問題集が存在しません。\n'
+                              'お気に入り問題集を作成するためには、お気に入りのクイズを保存して下さい。');
                     }),
               );
               courseButtons.add(favoriteQuizButton);

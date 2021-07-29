@@ -85,7 +85,7 @@ class AnswerPage extends StatelessWidget {
                   SizedBox(
                     width: 330,
                     child: ElevatedButton(
-                        child: Text('このクイズをオリジナル問題集から削除'),
+                        child: Text('このクイズをお気に入り問題集から削除'),
                         onPressed: () async {
                           final isDeleted = await model.deleteQuiz(_quiz);
                           Utility.getShowDialog(
@@ -96,12 +96,12 @@ class AnswerPage extends StatelessWidget {
                   SizedBox(
                     width: 330,
                     child: ElevatedButton(
-                        child: Text('オリジナル問題集に追加'),
+                        child: Text('お気に入り問題集に追加'),
                         onPressed: () async {
                           final isCompleted =
                               await model.addOriginalQuizzes(_quiz);
                           Utility.getShowDialog(context,
-                              isCompleted ? 'オリジナル問題集に追加しました。' : '既に登録済みです。');
+                              isCompleted ? 'お気に入り問題集に追加しました。' : '既に登録済みです。');
                         }),
                   ),
               ],

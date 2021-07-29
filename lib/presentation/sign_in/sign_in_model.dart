@@ -28,7 +28,7 @@ class SignInModel extends ChangeNotifier {
     // 初回サインインの場合はFirestoreのusersコレクションにユーザ追加
     if (await _isNotRegistered()) {
       final signUpModel = new SignUpModel();
-      await signUpModel.addUser(userCredential);
+      await signUpModel.addUser();
     }
   }
 

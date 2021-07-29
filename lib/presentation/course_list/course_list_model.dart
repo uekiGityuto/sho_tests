@@ -19,7 +19,7 @@ class CourseListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// オリジナル問題集作成
+  /// お気に入り問題集作成
   Future getOriginalQuizList() async {
     String uid = FirebaseAuth.instance.currentUser.uid;
     final querySnapshot = await FirebaseFirestore.instance

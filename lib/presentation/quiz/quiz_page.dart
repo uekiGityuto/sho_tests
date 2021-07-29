@@ -69,22 +69,31 @@ class QuizPage extends StatelessWidget {
                   )
                   .toList();
 
-              return Column(
-                children: [
-                  Row(children: [
-                    Text('問題'),
-                    Expanded(
-                        child: Text(
-                            model.quiz == null ? '' : model.quiz.question)),
-                  ]),
-                  Row(children: [
-                    Text('選択肢'),
-                    Column(
-                      children: optionList,
-                    ),
-                  ]),
-                  Text('${model.answeringNum}問目/全${model.totalQuizNum}問'),
-                ],
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Row(children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('問題'),
+                      ),
+                      Expanded(
+                          child: Text(
+                              model.quiz == null ? '' : model.quiz.question)),
+                    ]),
+                    Row(children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('選択肢'),
+                      ),
+                      Column(
+                        children: optionList,
+                      ),
+                    ]),
+                    Text('${model.answeringNum}問目/全${model.totalQuizNum}問'),
+                  ],
+                ),
               );
             },
           ),

@@ -5,20 +5,22 @@ import 'package:flutter/cupertino.dart';
 /// サインアップモデル
 class SignUpModel extends ChangeNotifier {
   /// Firestoreのusersコレクションにユーザ追加
-  Future addUser(UserCredential userCredential) async {
+  Future addUser() async {
     // Firestoreからusersコレクション取得
     CollectionReference collection =
         FirebaseFirestore.instance.collection('users');
+    final user = FirebaseAuth.instance.currentUser;
 
     // 追加対象データを準備
     Map<String, dynamic> data = <String, dynamic>{
-      'userName': userCredential.user.displayName,
+      'userName': user.displayName,
       'isManager': false,
-      'createdAt': Timestamp.now(),
-      'updatedAt': Timestamp.now(),
+      'isEnabled': true,
+      'createdAt': FieldValue.serverTimestamp(),
+      'updatedAt': FieldValue.serverTimestamp(),
     };
 
     // usersコレクションにユーザ追加
-    await collection.doc(userCredential.user.uid).set(data);
+    await collection.doc(user.uid).set(data);
   }
 }

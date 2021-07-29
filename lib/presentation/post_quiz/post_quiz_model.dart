@@ -51,8 +51,8 @@ class PostQuizModel extends ChangeNotifier {
       'userId': FirebaseAuth.instance.currentUser.uid,
       'isEnabled': true,
       'isExamined': true,
-      'createdAt': Timestamp.now(),
-      'updatedAt': Timestamp.now(),
+      'createdAt': FieldValue.serverTimestamp(),
+      'updatedAt': FieldValue.serverTimestamp(),
     });
   }
 }

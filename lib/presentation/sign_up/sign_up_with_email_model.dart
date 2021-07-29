@@ -22,8 +22,8 @@ class SignUpWithEmailModel extends ChangeNotifier {
           .createUserWithEmailAndPassword(email: email, password: pass);
 
       // Firestoreのusersコレクションにユーザ追加
-      final signUpModel = new SignUpModel();
-      await signUpModel.addUser(userCredential);
+      // final signUpModel = new SignUpModel();
+      // await signUpModel.addUser();
 
       // 確認メール送信
       User user = userCredential.user;
