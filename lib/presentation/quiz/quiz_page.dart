@@ -73,25 +73,48 @@ class QuizPage extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    Row(children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text('問題'),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        '問題',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      Expanded(
-                          child: Text(
-                              model.quiz == null ? '' : model.quiz.question)),
-                    ]),
-                    Row(children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text('選択肢'),
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                            child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                                model.quiz == null ? '' : model.quiz.question),
+                          ),
+                        )),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        '選択肢',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      Column(
-                        children: optionList,
-                      ),
-                    ]),
-                    Text('${model.answeringNum}問目/全${model.totalQuizNum}問'),
+                    ),
+                    Column(
+                      children: optionList,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                          '${model.answeringNum}問目/全${model.totalQuizNum}問'),
+                    ),
                   ],
                 ),
               );
