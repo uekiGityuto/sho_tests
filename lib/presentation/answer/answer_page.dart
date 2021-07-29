@@ -40,46 +40,97 @@ class AnswerPage extends StatelessWidget {
           body: Consumer<AnswerModel>(builder: (context, model, child) {
             return Column(
               children: [
-                Text(_isCorrect ? '正解！' : '失敗'),
-                Row(
-                  children: [
-                    Text('正解：'),
-                    Text(_quiz.answer),
-                  ],
+                Text(
+                  _isCorrect ? '正解！' : '失敗',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24.0,
+                    color: Colors.red,
+                  ),
                 ),
-                Row(
-                  children: [
-                    Text('解説：'),
-                    Expanded(
-                      child: Text(
-                        _quiz.commentary,
-                      ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 8.0, top: 8.0, right: 8.0, bottom: 0.0),
+                  child: Text(
+                    '正解の選択肢',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
                     ),
-                  ],
+                  ),
                 ),
-                SizedBox(
-                  width: 330,
-                  child: model.isEnd
-                      ? ElevatedButton(
-                          child: Text('結果確認'),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ResultPage(_quizList)),
-                            );
-                          })
-                      : ElevatedButton(
-                          child: Text('次の問題'),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => QuizPage(
-                                      quizList: _quizList,
-                                      isOriginal: _isOriginal)),
-                            );
-                          }),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 8.0, top: 0.0, right: 8.0, bottom: 8.0),
+                  child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(_quiz.answer),
+                      )),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 8.0, top: 8.0, right: 8.0, bottom: 0.0),
+                  child: Text(
+                    '解説',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 8.0, top: 0.0, right: 8.0, bottom: 8.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              _quiz.commentary,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 8.0, top: 16.0, right: 8.0, bottom: 8.0),
+                  child: SizedBox(
+                    width: 330,
+                    child: model.isEnd
+                        ? ElevatedButton(
+                            child: Text('結果確認'),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        ResultPage(_quizList)),
+                              );
+                            })
+                        : ElevatedButton(
+                            child: Text('次の問題'),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => QuizPage(
+                                        quizList: _quizList,
+                                        isOriginal: _isOriginal)),
+                              );
+                            }),
+                  ),
                 ),
                 if (this._isOriginal && !model.isDeleted)
                   SizedBox(
